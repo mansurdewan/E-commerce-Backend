@@ -47,8 +47,26 @@ const getProduct = async (req: Request, res: Response) => {
   }
 };
 
+const getSpecificProduct = async (req: Request, res: Response) => {
+  const productId = req.params.productId;
+  try {
+    const result = await productServices.getSpecificProductFromDb(productId);
+    res.send({
+      success: true,
+      message: "Product fetched successfully!",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      message: "Product not not found",
+      data: error,
+    });
+  }
+};
 
 export const productController = {
   creatProduct,
   getProduct,
+  getSpecificProduct,
 };

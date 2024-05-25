@@ -10,7 +10,13 @@ const getProductFromDb = () => {
   return result;
 };
 
+const getSpecificProductFromDb = (productId: string) => {
+  const result = ProductModel.findOne({ _id: productId });
+  return result;
+};
+
 export const productServices = {
   createProductIntoDb,
   getProductFromDb,
+  getSpecificProductFromDb,
 };
