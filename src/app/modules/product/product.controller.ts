@@ -6,7 +6,16 @@ import { productSchema } from "./product.validation";
 const creatProduct = async (req: Request, res: Response) => {
   try {
     const product: ProductInterface = req.body;
-    const result = await productServices.createProductIntoDb(product);
+    const { value, error } = productSchema.validate(product);
+    if (error) {
+      res.status(400).send({
+        success: false,
+        message: "Product not created Joy catch and error ",
+        error: error.details,
+      });
+    }
+
+    const result = await productServices.createProductIntoDb(value);
     res.send({
       success: true,
       message: "Product created successfully!",
