@@ -30,6 +30,25 @@ const creatProduct = async (req: Request, res: Response) => {
   }
 };
 
+const getProduct = async (req: Request, res: Response) => {
+  try {
+    const result = await productServices.getProductFromDb();
+    res.send({
+      success: true,
+      message: "Products fetched successfully!",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      message: "Product not not found",
+      data: error,
+    });
+  }
+};
+
+
 export const productController = {
   creatProduct,
+  getProduct,
 };
