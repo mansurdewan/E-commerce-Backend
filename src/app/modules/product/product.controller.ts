@@ -65,8 +65,39 @@ const getSpecificProduct = async (req: Request, res: Response) => {
   }
 };
 
+const updateSpecificProduct = async (req: Request, res: Response) => {
+  const productId = req.params.productId;
+  const product: ProductInterface = req.body;
+  try {
+    const { value, error } = productSchema.validate(product);
+    if (error) {
+      res.status(400).send({
+        success: false,
+        message: "Product not update Joy catch and error ",
+        error: error.details,
+      });
+    }
+
+    const result = await productServices.updateSpecificProductFromDb(
+      productId,
+      value
+    );
+    res.send({
+      success: true,
+      message: "Product updated successfully!",
+      data: result,
+    });
+  } catch (error) {
+    res.status(400).send({
+      success: false,
+      message: "Product not not found",
+      data: error,
+    });
+  }
+};
 export const productController = {
   creatProduct,
   getProduct,
   getSpecificProduct,
+  updateSpecificProduct,
 };
