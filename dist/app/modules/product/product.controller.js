@@ -39,13 +39,24 @@ const creatProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* (
     }
 });
 const getProduct = (req, res) => __awaiter(void 0, void 0, void 0, function* () {
+    const searchProduct = req.query.searchTerm;
     try {
-        const result = yield product_services_1.productServices.getProductFromDb();
-        res.send({
-            success: true,
-            message: "Products fetched successfully!",
-            data: result,
-        });
+        if (searchProduct) {
+            const result = yield product_services_1.productServices.getSearchProductFromDb(searchProduct);
+            res.send({
+                success: true,
+                message: `Products matching search term ${searchProduct} fetched successfully!`,
+                data: result,
+            });
+        }
+        else {
+            const result = yield product_services_1.productServices.getProductFromDb();
+            res.send({
+                success: true,
+                message: " ",
+                data: result,
+            });
+        }
     }
     catch (error) {
         res.status(400).send({

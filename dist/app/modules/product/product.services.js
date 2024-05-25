@@ -33,10 +33,16 @@ const deleteSpecificProductFromDb = (productId) => __awaiter(void 0, void 0, voi
     const result = yield product_model_1.ProductModel.findByIdAndDelete(productId);
     return result;
 });
+const getSearchProductFromDb = (searchProduct) => __awaiter(void 0, void 0, void 0, function* () {
+    const regex = new RegExp(searchProduct.toString(), "i");
+    const result = yield product_model_1.ProductModel.find({ name: regex });
+    return result;
+});
 exports.productServices = {
     createProductIntoDb,
     getProductFromDb,
     getSpecificProductFromDb,
     updateSpecificProductFromDb,
     deleteSpecificProductFromDb,
+    getSearchProductFromDb,
 };
