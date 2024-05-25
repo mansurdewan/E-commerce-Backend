@@ -30,10 +30,16 @@ const deleteSpecificProductFromDb = async (productId: string) => {
   return result;
 };
 
+const getSearchProductFromDb = async (searchProduct: any) => {
+  const regex = new RegExp(searchProduct.toString(), "i");
+  const result = await ProductModel.find({ name: regex });
+  return result;
+};
 export const productServices = {
   createProductIntoDb,
   getProductFromDb,
   getSpecificProductFromDb,
   updateSpecificProductFromDb,
   deleteSpecificProductFromDb,
+  getSearchProductFromDb,
 };

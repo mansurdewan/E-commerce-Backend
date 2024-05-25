@@ -31,13 +31,25 @@ const creatProduct = async (req: Request, res: Response) => {
 };
 
 const getProduct = async (req: Request, res: Response) => {
+  const searchProduct = req.query.searchTerm;
   try {
-    const result = await productServices.getProductFromDb();
-    res.send({
-      success: true,
-      message: "Products fetched successfully!",
-      data: result,
-    });
+    if (searchProduct) {
+      const result = await productServices.getSearchProductFromDb(
+        searchProduct
+      );
+      res.send({
+        success: true,
+        message: `Products matching search term ${searchProduct} fetched successfully!`,
+        data: result,
+      });
+    } else {
+      const result = await productServices.getProductFromDb();
+      res.send({
+        success: true,
+        message: " ",
+        data: result,
+      });
+    }
   } catch (error) {
     res.status(400).send({
       success: false,
